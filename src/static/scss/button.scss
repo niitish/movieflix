@@ -1,0 +1,25 @@
+.btn {
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-size: 1rem;
+  color: #fff;
+  border: none;
+  border-radius: 0.35rem;
+  cursor: pointer;
+  background: #f40612;
+  transition: background 0.2s ease-in-out;
+
+  &:hover {
+    background: rgb(160, 5, 5);
+  }
+}
+
+.secondary {
+  border: 1px solid #f40612;
+  background: rgba(48, 48, 48, 0.7);
+  transition: background 0.2s ease-in-out;
+
+  &:hover {
+    background: black;
+  }
+}
