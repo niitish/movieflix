@@ -16,9 +16,16 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const formHandler = (event) => {
     event.preventDefault();
+    setError("");
+
+    if (email.trim() === "" || password.trim() === "") {
+      setError("Email/Password can't be empty.");
+      return;
+    }
 
     if (ctx.modalType === "login") {
       signInWithEmailAndPassword(auth, email, password)
@@ -28,7 +35,10 @@ const Login = () => {
           navigate("/movieflix/search");
           ctx.setModalType("");
         })
-        .catch((error) => console.log(error.message));
+        .catch((error) => {
+          if (error.message.includes("wrong-password"))
+            setError("Wrong password. Please try again.");
+        });
     } else if (ctx.modalType === "signup") {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCred) => {
@@ -37,7 +47,10 @@ const Login = () => {
           navigate("/movieflix/search");
           ctx.setModalType("");
         })
-        .catch((error) => console.log(error.message));
+        .catch((error) => {
+          if (error.message.includes("email-already-in-use"))
+            setError("Email already in use.");
+        });
     }
   };
 
@@ -85,7 +98,7 @@ const Login = () => {
             required
           />
         </section>
-
+        {error && <p>{error}</p>}
         {(ctx.modalType === "login" && (
           <button
             type="submit"
